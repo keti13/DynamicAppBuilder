@@ -1,0 +1,70 @@
+﻿@page "/Editor"
+@using BlazorApp.Client.Pages
+@using BlazorApp.Client.Components
+
+<div id="mainDiv" class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
+    <div id="subdiv" class="w-100 d-flex flex-column border rounded-3 shadow-sm p-4 bg-white" style="max-width: 900px; height: 90vh;">
+        <Toolbar OnRun="@HandleRun" OnSave="@HandleSave" OnLoad="@HandleLoad" />
+
+        <div class="row gx-2 mt-2 flex-grow-1">
+
+            <!-- Components Panel -->
+            <div class="col-12 col-md-3 p-2 components-mobile-panel">
+                <div class="h-100 border rounded-3 p-3 bg-light d-flex flex-column">
+                    <div class="text-center text-muted small fw-semibold mb-3">Components</div>
+                    <div class="flex-grow-1 overflow-auto">
+                        <ComponentsPanel AvailableControls="@availableControls" OnControlDropped="@HandleControlDropped" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canvas Panel -->
+            <div class="col-12 col-md-6 p-2 canvas-mobile-panel">
+                <div class="h-100 border rounded-3 p-3 bg-white d-flex flex-column">
+
+                    <!-- View Mode Selector -->
+                    <div class="d-flex justify-content-center mb-2 small text-muted">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input small-radio" type="radio" name="viewMode"
+                                @onchange="@(() => selectedView = "Desktop")"
+                                checked="@("Desktop" == selectedView)" />
+                            <label class="form-check-label">Desktop</label>
+                        </div>
+                        <div class="form-check form-check-inline ms-3">
+                            <input class="form-check-input small-radio" type="radio" name="viewMode"
+                                   @onchange="@(() => selectedView = "Mobile")"
+                                   checked="@("Mobile" == selectedView)" />
+                            <label class="form-check-label">Mobile</label>
+                        </div>
+                    </div>
+
+                    <!-- Canvas Header -->
+                    <div class="text-center text-muted small fw-semibold mb-2">
+                        Canvas (@selectedView view)
+                    </div>
+
+                    <!-- Canvas Body -->
+                    <div class="flex-grow-1 overflow-auto">
+                        <CanvasPanel CanvasControls="@canvasControls"
+                                     OnSelectControl="@HandleControlSelected"
+                                     OnControlDropped="@HandleControlDropped"
+                                     ViewMode="@selectedView" />
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Properties Panel -->
+            <div class="col-12 col-md-3 p-2 properties-mobile-panel">
+                <div class="h-100 border rounded-3 p-3 bg-light d-flex flex-column">
+                    <div class="text-center text-muted small fw-semibold mb-3">Properties</div>
+                    <div class="flex-grow-1 overflow-auto">
+                        <PropertiesPanel SelectedControl="@selectedControl" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

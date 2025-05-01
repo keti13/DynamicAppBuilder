@@ -1,0 +1,13 @@
+﻿.property-input {
+    width: 98%;
+    padding: 4px 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+    .property-input:focus {
+        outline: none;
+        border-color: #999;
+        box-shadow: none;
+    }

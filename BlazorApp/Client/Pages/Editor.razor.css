@@ -1,0 +1,51 @@
+﻿/* Make mainDiv a full screen flex container */
+#mainDiv {
+    height: 90vh; /* Take up the full screen height */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    background-color: #f8f9fa;
+}
+
+/* Make subdiv exactly 90vh tall */
+#subdiv {
+    height: 90vh;
+}
+
+.small-radio {
+    transform: scale(0.85); /* Shrinks radio button */
+    margin-top: 2px;
+}
+
+.form-check-label {
+    font-size: 0.85rem;
+}
+
+
+/* On mobile: top-align the content to allow scrolling */
+@media (max-width: 768px) {
+    #mainDiv {
+        align-items: flex-start !important;
+        padding-top: 1rem;
+    }
+
+    #subdiv {
+        height: auto !important;
+        max-height: none !important;
+        overflow-y: auto !important;
+        max-width: 100% !important;
+    }
+
+    .components-mobile-panel {
+        min-height: 30vh;
+    }
+
+    .canvas-mobile-panel {
+        min-height: 50vh;
+        flex-grow: 2;
+    }
+
+    .properties-mobile-panel {
+        min-height: 20vh;
+    }
+}
