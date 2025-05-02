@@ -1,13 +1,15 @@
-﻿@inject IJSRuntime JS
+﻿<div class="components-panel">
+    <h5>Available Components</h5>
 
-@foreach (var control in AvailableControls)
-{
-    <div class="component-card d-flex align-items-center mb-2 p-2 border rounded bg-white shadow-sm"
-         draggable="true"
-         ondragstart="setDragData(event, '@control.Type')">
-        <img src="@control.IconUrl"
-             alt="@control.Type"
-             style="width: 24px; height: 24px; margin-right: 10px;" />
-        <span class="small">@control.Label</span>
-    </div>
-}
+    @foreach (var control in AvailableControls)
+    {
+        <div class="component-card d-flex align-items-center mb-2 p-2 border rounded bg-white shadow-sm"
+             draggable="true"
+             ondragstart="window.setDragData(event, '@control.Type')">
+            <img src="@control.IconUrl"
+                 alt="@control.Type"
+                 style="width: 24px; height: 24px; margin-right: 10px;" />
+            <span class="small">@control.Label</span>
+        </div>
+    }
+</div>
