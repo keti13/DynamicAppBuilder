@@ -24,8 +24,10 @@ namespace BlazorApp.Client.Components
         {
             if (firstRender)
             {
+                _dotNetRef = DotNetObjectReference.Create(this);
                 await JS.InvokeVoidAsync("setupComponentDragToCanvas", _dotNetRef);
-
+                await JS.InvokeVoidAsync("enableDrag", ".draggable");
+                await JS.InvokeVoidAsync("registerBlazorCanvasRef", _dotNetRef); // NEW
             }
         }
 
@@ -48,6 +50,17 @@ namespace BlazorApp.Client.Components
             CanvasControls.Add(control);
             await JS.InvokeVoidAsync("enableDrag", ".draggable");
             StateHasChanged();
+        }
+
+        [JSInvokable]
+        public void UpdateControlPosition(string id, double x, double y)
+        {
+            var control = CanvasControls.FirstOrDefault(c => c.Id.ToString() == id);
+            if (control != null)
+            {
+                control.X = (int)x;
+                control.Y = (int)y;
+            }
         }
 
         protected void HandleControlSelect(ControlType control)

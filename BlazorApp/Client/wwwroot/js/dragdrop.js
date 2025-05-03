@@ -3,33 +3,62 @@
         inertia: true,
         modifiers: [
             interact.modifiers.restrictRect({
-                restriction: '#canvas-dropzone',  // restrict to canvas
-                endOnly: true,                    // restrict only at drag end
-                elementRect: { top: 0, left: 0, bottom: 1.2, right: 1 }
+                restriction: '#canvas-dropzone',
+                endOnly: true,
+                elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
             })
         ],
         listeners: {
             move(event) {
                 const target = event.target;
 
-                let x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
-                let y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+                const x = (parseFloat(target.dataset.x) || 0) + event.dx;
+                const y = (parseFloat(target.dataset.y) || 0) + event.dy;
 
                 target.style.transform = `translate(${x}px, ${y}px)`;
-                target.setAttribute('data-x', x);
-                target.setAttribute('data-y', y);
+                target.dataset.x = x;
+                target.dataset.y = y;
+            },
+
+            end(event) {
+                const target = event.target;
+                const id = target.getAttribute('id')?.replace("control-", "");
+                const canvas = document.getElementById('canvas-dropzone');
+                const canvasRect = canvas.getBoundingClientRect();
+                const targetRect = target.getBoundingClientRect();
+
+                const relativeX = targetRect.left - canvasRect.left;
+                const relativeY = targetRect.top - canvasRect.top;
+
+                // Reset the transform
+                target.style.transform = '';
+                target.style.left = `${relativeX}px`;
+                target.style.top = `${relativeY}px`;
+
+                // Reset dataset
+                target.dataset.x = 0;
+                target.dataset.y = 0;
+
+                // Notify Blazor
+                if (window.blazorCanvas && id) {
+                    window.blazorCanvas.invokeMethodAsync("UpdateControlPosition", id, relativeX, relativeY);
+                }
             }
         }
     });
 };
 
 
+window.registerBlazorCanvasRef = function (dotNetRef) {
+    window.blazorCanvas = dotNetRef;
+};
+
 function isValidDropTarget(event) {
     const dropzone = document.getElementById('canvas-dropzone');
     if (!dropzone) return false;
 
     const rect = dropzone.getBoundingClientRect();
-    const buffer = 40; // 1px tighter
+    const buffer = 60; // 1px tighter
 
     // Get coordinates based on event type (touch or mouse)
     const clientX = event.clientX || (event.touches && event.touches[0]?.clientX);
