@@ -48,6 +48,7 @@
 .control-item {
     cursor: grab;
     position: absolute;
+    min-width: 150px;
     padding: 0;
     display: block; /* or flex if you need alignment */
     background: none;

@@ -29,12 +29,19 @@ function isValidDropTarget(event) {
     if (!dropzone) return false;
 
     const rect = dropzone.getBoundingClientRect();
+    const buffer = 40; // 1px tighter
+
+    // Get coordinates based on event type (touch or mouse)
+    const clientX = event.clientX || (event.touches && event.touches[0]?.clientX);
+    const clientY = event.clientY || (event.touches && event.touches[0]?.clientY);
+
+    if (!clientX || !clientY) return false;
 
     return (
-        event.clientX >= rect.left &&
-        event.clientX <= rect.right &&
-        event.clientY >= rect.top &&
-        event.clientY <= rect.bottom
+        clientX >= rect.left &&
+        clientX < rect.right - buffer &&
+        clientY >= rect.top &&
+        clientY < rect.bottom - buffer
     );
 }
 
@@ -47,7 +54,7 @@ window.setupComponentDragToCanvas = function (dotNetRef) {
             interact.modifiers.restrictRect({
                 restriction: '#canvas-dropzone',
                 endOnly: true,
-                elementRect: { top: 0, left: 0, bottom: 1, right: 1 } // 🧠 anchor the whole element
+                elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
             })
         ],
         listeners: {
@@ -65,29 +72,43 @@ window.setupComponentDragToCanvas = function (dotNetRef) {
                 target.setAttribute('data-y', y);
 
                 // Visual feedback for hovering over canvas
+                const canvas = document.getElementById('canvas-dropzone');
                 const rect = canvas.getBoundingClientRect();
-                const isOverCanvas =
-                    event.client.x >= rect.left &&
-                    event.client.x <= rect.right &&
-                    event.client.y >= rect.top &&
-                    event.client.y <= rect.bottom;
+                const clientX = event.clientX || (event.touches && event.touches[0]?.clientX);
+                const clientY = event.clientY || (event.touches && event.touches[0]?.clientY);
 
-                canvas.classList.toggle('drop-active', isOverCanvas);
+                if (clientX && clientY) {
+                    const isOverCanvas =
+                        clientX >= rect.left &&
+                        clientX <= rect.right &&
+                        clientY >= rect.top &&
+                        clientY <= rect.bottom;
+
+                    canvas.classList.toggle('drop-active', isOverCanvas);
+                }
             },
 
             end(event) {
+                const canvas = document.getElementById('canvas-dropzone');
                 const rect = canvas.getBoundingClientRect();
 
-                const controlType = event.target.getAttribute('data-control');
-                if (!controlType) return;
+                if (isValidDropTarget(event)) {
+                    const controlType = event.target.getAttribute('data-control');
+                    const clientX = event.clientX || (event.changedTouches && event.changedTouches[0]?.clientX);
+                    const clientY = event.clientY || (event.changedTouches && event.changedTouches[0]?.clientY);
 
-                const dropX = event.clientX - rect.left + canvas.scrollLeft;
-                const dropY = event.clientY - rect.top + canvas.scrollTop;
+                    if (clientX && clientY) {
+                        const dropX = clientX - rect.left;
+                        const dropY = clientY - rect.top;
 
-                // Fire the Blazor method to drop the component
-                dotNetRef.invokeMethodAsync('HandleDropFromJS', controlType, dropX, dropY);
+                        dotNetRef.invokeMethodAsync('HandleDropFromJS', controlType, dropX, dropY);
+                    }
+                }
+                else {
+                    console.log("Drop outside canvas prevented.");
+                }
 
-                // Reset styles
+                // Reset visuals
                 event.target.classList.remove('is-dragging');
                 event.target.style.transform = '';
                 event.target.setAttribute('data-x', 0);
