@@ -1,0 +1,62 @@
+﻿@page "/preview"
+@using BlazorApp.Client.Pages
+@using BlazorApp.Shared
+
+<h5 class="text-muted">Preview Mode (@ViewMode view)</h5>
+
+<div class="container @(ViewMode == "Mobile" ? "w-100" : "w-75") mt-4">
+    @foreach (var control in CanvasControls)
+    {
+        <div class="mb-3">
+            @switch (control.Type)
+            {
+                case "TextInput":
+                    <input class="form-control"
+                           type="text"
+                           placeholder="@control.Placeholder"
+                           value="@control.DefaultValue" />
+                    break;
+
+                case "NumberInput":
+                    <input class="form-control"
+                           type="number"
+                           placeholder="@control.Placeholder"
+                           value="@control.DefaultValue" />
+                    break;
+
+                case "Dropdown":
+                    <select class="form-select">
+                        <option disabled selected>@control.Placeholder</option>
+                        @foreach (var option in control.Options)
+                        {
+                            <option>@option</option>
+                        }
+                    </select>
+                    break;
+
+                case "Checkbox":
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox"
+                               checked="@("true".Equals(control.DefaultValue, StringComparison.OrdinalIgnoreCase))" />
+                        <label class="form-check-label">@control.Label</label>
+                    </div>
+                    break;
+
+                case "DatetimePicker":
+                    <input class="form-control"
+                           type="datetime-local"
+                           value="@control.DefaultValue" />
+                    break;
+
+                case "Button":
+                    <button class="btn btn-primary">@(!string.IsNullOrWhiteSpace(control.DefaultValue) ? control.DefaultValue : control.Label)</button>
+                    break;
+            }
+        </div>
+    }
+</div>
+
+
+
+
+

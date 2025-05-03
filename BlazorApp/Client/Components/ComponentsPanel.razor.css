@@ -1,0 +1,54 @@
+﻿.component-card {
+    cursor: grab;
+    transition: transform 0.1s, box-shadow 0.1s;
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    text-align: left;
+    font-weight: normal;
+    margin-bottom: 8px;
+    box-sizing: border-box;
+}
+
+.component-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: #f8f9fa;
+}
+
+.component-card:active {
+    cursor: grabbing;
+    background-color: #e9ecef;
+}
+
+.component-card img {
+    color: #6c757d;
+    flex-shrink: 0;
+}
+
+.component-card span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.draggable-source {
+    cursor: grab;
+    transition: none;
+    width: 100%;
+    max-width: 100%;
+}
+
+.draggable-source.is-dragging {
+    z-index: 9999;
+    position: fixed;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.4);
+    transform: none;
+    opacity: 0.9;
+    cursor: grabbing;
+    width: auto;
+    min-width: 200px;
+    pointer-events: none;
+}
+
+

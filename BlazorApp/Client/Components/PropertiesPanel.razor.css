@@ -1,13 +1,19 @@
 ﻿.property-input {
-    width: 98%;
-    padding: 4px 4px;
+    width: 100%;
+    padding: 4px 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    box-sizing: border-box;
 }
 
     .property-input:focus {
         outline: none;
-        border-color: #999;
+        border-color: #007bff;
         box-shadow: none;
     }
+
+.form-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+}

@@ -1,22 +1,139 @@
-﻿@* @if (SelectedControl != null)
-{ *@
-    <div class="form-group mb-3">
-    <label class="small">Label</label>
-    <input class="property-input" />
-    </div>
+﻿@if (SelectedControl != null)
+{
+    @switch (SelectedControl.Type?.Trim())
+    {
+        case "NumberInput":
+            <div class="form-group mb-2">
+                <label class="form-label small mb-1">Label</label>
+                <input class="property-input"
+                @bind="SelectedControl.Label"
+                @bind:event="oninput"
+                @bind:after="NotifyChanged" />
+            </div>
 
-    <div class="form-group mb-3">
-    <label class="small">Placeholder</label>
-    <input class="property-input" />
-    </div>
+            <div class="form-group mb-2">
+                <label class="form-label small mb-1">Placeholder</label>
+                <input class="property-input"
+                       inputmode="numeric"
+                       pattern="[0-9]*"
+                @bind="SelectedControl.Placeholder"
+                @bind:event="oninput"
+                @bind:after="NotifyChanged" />
+            </div>
 
-    <div class="form-group mb-3">
-    <label class="small">Default Value</label>
-    <input class="property-input" />
-    </div>
-@* }
+            <div class="form-group mb-2">
+                <label class="form-label small mb-1">Default Value</label>
+                <input class="property-input"
+                       inputmode="numeric"
+                       pattern="[0-9]*"
+                @bind="SelectedControl.DefaultValue"
+                @bind:event="oninput"
+                @bind:after="NotifyChanged" />
+            </div>
+            break;
+        case "Checkbox":
+            <div class="form-group mb-2">
+                <label class="form-label small mb-1">Label</label>
+                <input class="property-input"
+                @bind="SelectedControl.Label"
+                @bind:event="oninput"
+                @bind:after="NotifyChanged" />
+            </div>
+            <div class="form-group mb-2">
+                <label class="form-label small mb-1">Default Value</label>
+                <input class="property-input"
+                @bind="SelectedControl.DefaultValue"
+                @bind:event="oninput"
+                @bind:after="NotifyChanged" />
+            </div>
+            break;
+
+        case "Button":
+            <div class="form-group mb-2">
+                <label class="form-label small mb-1">Text</label>
+                <input class="property-input"
+                @bind="SelectedControl.DefaultValue"
+                @bind:event="oninput"
+                @bind:after="NotifyChanged" />
+            </div>
+            break;
+
+        case "DatetimePicker":
+            <div class="form-group mb-2">
+                <label class="form-label small mb-1">Label</label>
+                <input class="property-input"
+                @bind="SelectedControl.Label"
+                @bind:event="oninput"
+                @bind:after="NotifyChanged" />
+            </div>
+
+            <div class="form-group mb-2">
+                <label class="form-label small mb-1">Default Value</label>
+                <input class="property-input"
+                       type="datetime-local"
+                       value="@SelectedControl.DefaultValue"
+                @oninput="e => OnDatetimeChanged(e.Value?.ToString())" />
+            </div>
+            break;
+
+        case "Dropdown":
+            <div class="form-group mb-2">
+                <label class="form-label small mb-1">Label</label>
+                <input class="property-input"
+                @bind="SelectedControl.Label"
+                @bind:event="oninput"
+                @bind:after="NotifyChanged" />
+            </div>
+
+            <div class="form-group mb-2">
+                <label class="form-label small mb-1">Placeholder</label>
+                <input class="property-input"
+                @bind="SelectedControl.Placeholder"
+                @bind:event="oninput"
+                @bind:after="NotifyChanged" />
+            </div>
+
+            @for (int i = 0; i < 3; i++)
+            {
+                <div class="form-group mb-2">
+                    <label class="form-label small mb-1">Option @(i + 1)</label>
+                    <input class="property-input"
+                           value="@SelectedControl.Options.ElementAtOrDefault(i)"
+                    @oninput="e => UpdateOption(i, e.Value?.ToString())" />
+                </div>
+            }
+            break;
+
+        default:
+            <div class="form-group mb-2">
+                <label class="form-label small mb-1">Label</label>
+                <input class="property-input"
+                @bind="SelectedControl.Label"
+                @bind:event="oninput"
+                @bind:after="NotifyChanged" />
+            </div>
+
+            <div class="form-group mb-2">
+                <label class="form-label small mb-1">Placeholder</label>
+                <input class="property-input"
+                @bind="SelectedControl.Placeholder"
+                @bind:event="oninput"
+                @bind:after="NotifyChanged" />
+            </div>
+
+            <div class="form-group mb-2">
+                <label class="form-label small mb-1">Default Value</label>
+                <input class="property-input"
+                @bind="SelectedControl.DefaultValue"
+                @bind:event="oninput"
+                @bind:after="NotifyChanged" />
+            </div>
+            break;
+    }
+}
 else
 {
-    <div class="text-muted">Select a control to edit properties.</div>
+    <div class="text-muted small">
+        Select a control to edit its properties.
+    </div>
 }
- *@

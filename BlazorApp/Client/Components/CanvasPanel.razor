@@ -1,11 +1,8 @@
-﻿<div class="canvas-panel">
-    <h5>Canvas (@ViewMode)</h5>
+﻿<div class="canvas-panel d-flex flex-column h-100">
 
-    <div id="canvas-dropzone" class="canvas-dropzone"
-         ondragover="event.preventDefault(); event.dataTransfer.dropEffect='copy'"
-         ondragenter="event.preventDefault(); this.classList.add('drop-active')"
-         ondragleave="this.classList.remove('drop-active')"
-         @ondrop="HandleDrop">
+    <div id="canvas-dropzone"
+         class="canvas-dropzone"
+    @onclick="() => ClearSelection()">
 
         @if (CanvasControls == null || CanvasControls.Count == 0)
         {
@@ -15,41 +12,84 @@
         {
             @foreach (var control in CanvasControls)
             {
-                <div class="control-item"
+                <div class="control-item draggable @(control == SelectedControl ? "selected-control" : "")"
+                     id="control-@control.Id"
                      style="position: absolute; left: @(control.X)px; top: @(control.Y)px;"
-                     @onclick="() => HandleControlSelect(control)">
-                    <div class="p-2 border rounded bg-white">
-                        <strong>@control.Label</strong> (@control.Type)
+                @onclick:stopPropagation
+                @onclick="() => HandleControlSelect(control)">
+
+                    @if (control == SelectedControl)
+                    {
+                        <button class="delete-btn" @onclick:stopPropagation @onclick="() => RemoveControl(control)">
+                            &times;
+                        </button>
+                    }
+
+                    <div class="draggable-inner">
+                        @switch (control.Type)
+                        {
+                            case "TextInput":
+                                <label class="form-label small">@control.Label</label>
+                                <input class="form-control form-control-sm"
+                                       type="text"
+                                       placeholder="@control.Placeholder"
+                                       value="@control.DefaultValue"
+                                       readonly />
+                                break;
+
+                            case "NumberInput":
+                                <label class="form-label small">@control.Label</label>
+                                <input class="form-control form-control-sm"
+                                       type="number"
+                                       placeholder="@control.Placeholder"
+                                       value="@control.DefaultValue"
+                                       readonly />
+                                break;
+
+                            case "Dropdown":
+                                <div class="d-flex flex-column gap-1">
+                                    <label class="form-label small text-muted">@control.Label</label>
+                                    <select class="form-select form-select-sm" disabled>
+                                        <option disabled selected>@(control.Placeholder ?? "Select an option")</option>
+                                    </select>
+                                </div>
+                                break;
+
+                            case "DatetimePicker":
+                                <div class="d-flex flex-column gap-1">
+                                    <label class="form-label small text-muted">@control.Label</label>
+                                    <input class="form-control form-control-sm"
+                                           type="datetime-local"
+                                           value="@control.DefaultValue"
+                                           readonly />
+                                </div>
+                                break;
+
+                            case "Button":
+                                <div class="d-flex flex-column gap-1">
+                                    <div class="btn btn-sm btn-secondary w-100 disabled" style="pointer-events: none;">
+                                        @(!string.IsNullOrWhiteSpace(control.DefaultValue) ? control.DefaultValue : control.Label)
+                                    </div>
+                                </div>
+                                break;
+
+                            case "Checkbox":
+                                <div class="d-flex align-items-center gap-2">
+                                    <input type="checkbox"
+                                           class="form-check-input m-0"
+                                           disabled
+                                           checked="@("true".Equals(control.DefaultValue, StringComparison.OrdinalIgnoreCase))" />
+                                    <label class="form-check-label m-0 small text-body">@control.Label</label>
+                                </div>
+                                break;
+
+                            default:
+                                <span>@control.Label (@control.Type)</span>
+                                break;
+                        }
                     </div>
                 </div>
             }
         }
     </div>
 </div>
-
-<style>
-    .canvas-dropzone {
-        position: relative;
-        min-height: 300px;
-        border: 2px dashed #ccc;
-        border-radius: 5px;
-        padding: 10px;
-        background-color: #f9f9f9;
-        transition: all 0.3s ease;
-    }
-
-    .canvas-dropzone:hover {
-        border-color: #999;
-        background-color: #f5f5f5;
-    }
-
-    .drop-active {
-        border-color: #007bff;
-        background-color: #e8f4ff;
-    }
-
-    .control-item {
-        cursor: move;
-        z-index: 10;
-    }
-</style>

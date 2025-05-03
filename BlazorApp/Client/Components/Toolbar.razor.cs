@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using BlazorApp.Client.Services;
+using Microsoft.AspNetCore.Components;
 
 namespace BlazorApp.Client.Components
 {
@@ -7,6 +8,7 @@ namespace BlazorApp.Client.Components
         [Parameter] public EventCallback OnRun { get; set; }
         [Parameter] public EventCallback OnSave { get; set; }
         [Parameter] public EventCallback OnLoad { get; set; }
+        [Parameter] public bool CanSave { get; set; }
 
         protected async Task OnRunClicked() => await OnRun.InvokeAsync();
         protected async Task OnSaveClicked() => await OnSave.InvokeAsync();

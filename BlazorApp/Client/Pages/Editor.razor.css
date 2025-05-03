@@ -1,6 +1,6 @@
 ﻿/* Make mainDiv a full screen flex container */
 #mainDiv {
-    height: 90vh; /* Take up the full screen height */
+    height: 100vh; /* Take up the full screen height */
     display: flex;
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
@@ -9,8 +9,12 @@
 
 /* Make subdiv exactly 90vh tall */
 #subdiv {
-    height: 90vh;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* 🔥 prevents children from exceeding this height */
 }
+
 
 .small-radio {
     transform: scale(0.85); /* Shrinks radio button */
@@ -19,6 +23,83 @@
 
 .form-check-label {
     font-size: 0.85rem;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent dark background */
+    z-index: 9999;
+}
+
+.alert-box {
+    background-color: white;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    max-width: 80%;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255,255,255,0.8);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content-box {
+    background: white;
+    border-radius: 8px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+
+thead th {
+    position: sticky;
+    top: 0;
+    background: #f8f9fa;
+    z-index: 1;
 }
 
 
@@ -36,16 +117,26 @@
         max-width: 100% !important;
     }
 
-    .components-mobile-panel {
-        min-height: 30vh;
-    }
-
     .canvas-mobile-panel {
-        min-height: 50vh;
+        min-height: 60vh; /* ⬆️ Increase canvas height */
         flex-grow: 2;
     }
 
     .properties-mobile-panel {
-        min-height: 20vh;
+        min-height: 15vh;
     }
+
+    .components-mobile-panel {
+        max-height: 25vh;
+        overflow-y: auto;
+    }
+
+        .components-mobile-panel::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .components-mobile-panel::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
 }
