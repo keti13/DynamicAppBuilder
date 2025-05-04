@@ -2,40 +2,45 @@
 @using BlazorApp.Client.Pages
 @using BlazorApp.Shared
 
-<div id="mainDiv" class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
-    <div id="subdiv" class="w-100 p-4 bg-white rounded shadow-sm" style="max-width: 900px; height: 96vh;">
-
-        <div class="text-center mb-4">
-            <h2 class="fw-bold mb-1" style="font-size: 1.75rem;">Dynamic Application</h2>
-            <p class="text-muted mb-0" style="font-size: 0.95rem;">
-                Preview Mode (@CanvasState.SelectedView view)
-            </p>
-        </div>
-
-        <!-- Wrapping container to measure space -->
-        <div id="preview-container"
-             class="position-relative bg-light border rounded"
-             style="width: 100%; aspect-ratio: 9 / 8; overflow: hidden;">
-
-            <div id="canvas-inner"
-                 style="width: 390px; height: 450px;">
+<div id="mainDiv" class="d-flex flex-column align-items-center" style="min-height: 100vh; background-color: #e0c887;">
+    <div class="text-center mb-1">
+        <h6 class="fw-bold mb-1">Preview Mode (@CanvasState.SelectedView view)</h6>
+    </div>
+    <div id="canvas-wrapper" class="flex-grow-1 w-100 d-flex justify-content-center align-items-start overflow-auto">
+        <div id="canvas-inner"
+             class="position-relative rounded border bg-white shadow"
+             style="width: @(previewWidth)px; height: @(previewHeight)px">
+              
                 @foreach (var control in CanvasState.Controls)
                 {
-                    <div class="position-absolute" style="left:@(control.X)px; top:@(control.Y)px; min-width: 120px;">
+                <div class="position-absolute" style="
+                     left:@(control.X * ScaleX)px;
+                     top:@(control.Y * ScaleY)px;
+                     min-width: @(150 * ScaleX)px;">
                         <div class="mb-2">
                             @switch (control.Type)
                             {
-                                case "TextInput":
+                            case "TextInput":
+                                <div class="mb-3">
+                                    <label class="control-label">@control.Label</label>
                                     <input class="form-control" type="text"
                                            placeholder="@control.Placeholder"
                                            value="@control.DefaultValue" />
-                                    break;
-                                case "NumberInput":
+                                </div>
+                                break;
+
+                            case "NumberInput":
+                                <div class="mb-3">
+                                    <label class="control-label">@control.Label</label>
                                     <input class="form-control" type="number"
                                            placeholder="@control.Placeholder"
                                            value="@control.DefaultValue" />
-                                    break;
-                                case "Dropdown":
+                                </div>
+                                break;
+
+                            case "Dropdown":
+                                <div class="mb-3">
+                                    <label class="control-label">@control.Label</label>
                                     <select class="form-select">
                                         <option disabled selected>@control.Placeholder</option>
                                         @foreach (var option in control.Options.Where(o => !string.IsNullOrWhiteSpace(o)))
@@ -43,29 +48,39 @@
                                             <option>@option</option>
                                         }
                                     </select>
-                                    break;
-                                case "Checkbox":
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox"
-                                               checked="@("true".Equals(control.DefaultValue, StringComparison.OrdinalIgnoreCase))" />
-                                        <label class="form-check-label ms-1">@control.Label</label>
-                                    </div>
-                                    break;
-                                case "DatetimePicker":
+                                </div>
+                                break;
+
+                            case "Checkbox":
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox"
+                                           checked="@("true".Equals(control.DefaultValue, StringComparison.OrdinalIgnoreCase))"
+                                           id="chk_@control.Id" />
+                                    <label class="form-check-label ms-1" for="chk_@control.Id">
+                                        @control.Label
+                                    </label>
+                                </div>
+                                break;
+
+                            case "DatetimePicker":
+                                <div class="mb-3">
+                                    <label class="control-label">@control.Label</label>
                                     <input class="form-control" type="datetime-local"
                                            value="@control.DefaultValue" />
-                                    break;
-                                case "Button":
-                                    <button class="btn btn-primary w-auto">
-                                        @(!string.IsNullOrWhiteSpace(control.DefaultValue) ? control.DefaultValue : control.Label)
-                                    </button>
-                                    break;
+                                </div>
+                                break;
+
+                            case "Button":
+                                <button class="btn btn-primary" style="min-width: 300px;">
+                                    @(!string.IsNullOrWhiteSpace(control.DefaultValue) ? control.DefaultValue : control.Label)
+                                </button>
+                                break;
+
                             }
                         </div>
                     </div>
                 }
             </div>
-        </div>
     </div>
 </div>
 

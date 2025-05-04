@@ -67,7 +67,7 @@
 
                             case "Button":
                                 <div class="d-flex flex-column gap-1">
-                                    <div class="btn btn-sm btn-secondary w-100 disabled" style="pointer-events: none;">
+                                    <div class="btn btn-sm btn-secondary w-100 disabled" style="pointer-events: none; min-width: 190px;">
                                         @(!string.IsNullOrWhiteSpace(control.DefaultValue) ? control.DefaultValue : control.Label)
                                     </div>
                                 </div>

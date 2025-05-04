@@ -2,6 +2,7 @@
 using BlazorApp.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System.Drawing;
 using System.Net.Http.Json;
 using System.Text.Json;
 
@@ -13,6 +14,7 @@ namespace BlazorApp.Client.Pages
         [Inject] private CanvasStateService CanvasState { get; set; } = default!;
         [Inject] protected HttpClient Http { get; set; } = default!;
         [Inject] protected IJSRuntime JS { get; set; } = default!;
+        [Inject] CanvasPreviewState? PreviewState { get; set; }
 
         protected List<ControlType> availableControls = new List<ControlType>
         {
@@ -130,10 +132,14 @@ namespace BlazorApp.Client.Pages
             StateHasChanged();
         }
 
-        protected void HandleRun()
+        private async Task HandleRun()
         {
+            var size = await JS.InvokeAsync<BlazorApp.Shared.Size>("getElementSize", "canvas-dropzone");
             CanvasState.Controls = canvasControls;
             CanvasState.SelectedView = selectedView;
+            PreviewState.CanvasWidth = size.width;
+            PreviewState.CanvasHeight = size.height;
+
             NavigationManager?.NavigateTo("/preview");
         }
     }
