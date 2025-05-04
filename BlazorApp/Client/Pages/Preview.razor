@@ -2,61 +2,70 @@
 @using BlazorApp.Client.Pages
 @using BlazorApp.Shared
 
-<h5 class="text-muted">Preview Mode (@ViewMode view)</h5>
+<div id="mainDiv" class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
+    <div id="subdiv" class="w-100 p-4 bg-white rounded shadow-sm" style="max-width: 900px; height: 96vh;">
 
-<div class="container @(ViewMode == "Mobile" ? "w-100" : "w-75") mt-4">
-    @foreach (var control in CanvasControls)
-    {
-        <div class="mb-3">
-            @switch (control.Type)
-            {
-                case "TextInput":
-                    <input class="form-control"
-                           type="text"
-                           placeholder="@control.Placeholder"
-                           value="@control.DefaultValue" />
-                    break;
-
-                case "NumberInput":
-                    <input class="form-control"
-                           type="number"
-                           placeholder="@control.Placeholder"
-                           value="@control.DefaultValue" />
-                    break;
-
-                case "Dropdown":
-                    <select class="form-select">
-                        <option disabled selected>@control.Placeholder</option>
-                        @foreach (var option in control.Options)
-                        {
-                            <option>@option</option>
-                        }
-                    </select>
-                    break;
-
-                case "Checkbox":
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox"
-                               checked="@("true".Equals(control.DefaultValue, StringComparison.OrdinalIgnoreCase))" />
-                        <label class="form-check-label">@control.Label</label>
-                    </div>
-                    break;
-
-                case "DatetimePicker":
-                    <input class="form-control"
-                           type="datetime-local"
-                           value="@control.DefaultValue" />
-                    break;
-
-                case "Button":
-                    <button class="btn btn-primary">@(!string.IsNullOrWhiteSpace(control.DefaultValue) ? control.DefaultValue : control.Label)</button>
-                    break;
-            }
+        <div class="text-center mb-4">
+            <h2 class="fw-bold mb-1" style="font-size: 1.75rem;">Dynamic Application</h2>
+            <p class="text-muted mb-0" style="font-size: 0.95rem;">
+                Preview Mode (@CanvasState.SelectedView view)
+            </p>
         </div>
-    }
+
+        <!-- Wrapping container to measure space -->
+        <div id="preview-container"
+             class="position-relative bg-light border rounded"
+             style="width: 100%; aspect-ratio: 9 / 8; overflow: hidden;">
+
+            <div id="canvas-inner"
+                 style="width: 390px; height: 450px;">
+                @foreach (var control in CanvasState.Controls)
+                {
+                    <div class="position-absolute" style="left:@(control.X)px; top:@(control.Y)px; min-width: 120px;">
+                        <div class="mb-2">
+                            @switch (control.Type)
+                            {
+                                case "TextInput":
+                                    <input class="form-control" type="text"
+                                           placeholder="@control.Placeholder"
+                                           value="@control.DefaultValue" />
+                                    break;
+                                case "NumberInput":
+                                    <input class="form-control" type="number"
+                                           placeholder="@control.Placeholder"
+                                           value="@control.DefaultValue" />
+                                    break;
+                                case "Dropdown":
+                                    <select class="form-select">
+                                        <option disabled selected>@control.Placeholder</option>
+                                        @foreach (var option in control.Options.Where(o => !string.IsNullOrWhiteSpace(o)))
+                                        {
+                                            <option>@option</option>
+                                        }
+                                    </select>
+                                    break;
+                                case "Checkbox":
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox"
+                                               checked="@("true".Equals(control.DefaultValue, StringComparison.OrdinalIgnoreCase))" />
+                                        <label class="form-check-label ms-1">@control.Label</label>
+                                    </div>
+                                    break;
+                                case "DatetimePicker":
+                                    <input class="form-control" type="datetime-local"
+                                           value="@control.DefaultValue" />
+                                    break;
+                                case "Button":
+                                    <button class="btn btn-primary w-auto">
+                                        @(!string.IsNullOrWhiteSpace(control.DefaultValue) ? control.DefaultValue : control.Label)
+                                    </button>
+                                    break;
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 </div>
-
-
-
-
 

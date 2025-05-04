@@ -32,14 +32,17 @@ namespace BlazorApp.Client.Components
             SelectedControl.DefaultValue = value;
             await NotifyChanged();
         }
-        private void UpdateOption(int index, string value)
+        private async Task UpdateOption(int index, string? value)
         {
-            while (SelectedControl.Options.Count <= index)
-            {
-                SelectedControl.Options.Add(string.Empty);
-            }
+            if (SelectedControl.Options == null)
+                SelectedControl.Options = new List<string>();
 
-            SelectedControl.Options[index] = value;
+            while (SelectedControl.Options.Count <= index)
+                SelectedControl.Options.Add(string.Empty);
+
+            SelectedControl.Options[index] = value ?? string.Empty;
+
+            await NotifyChanged();
         }
     }
 }
