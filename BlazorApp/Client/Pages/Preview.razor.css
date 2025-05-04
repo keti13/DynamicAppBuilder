@@ -1,6 +1,8 @@
 ﻿body, #mainDiv {
     background: linear-gradient(135deg, #f8fafc 0%, #f1e7c6 100%);
     min-height: 100vh;
+    margin: 0;
+    padding: 0;
 }
 
 #mainDiv {
@@ -8,18 +10,18 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding: 2.5rem 0 2rem 0;
+    padding: 0;
+    margin: 0;
 }
 
 #canvas-wrapper {
-    box-shadow: 0 0 0 8px #e0c887, 0 8px 32px rgba(0,0,0,0.10);
+    box-shadow: 0 0 0 1.5px #e0c887, 0 8px 32px rgba(0,0,0,0.10);
     border-radius: 1.5rem;
-    padding: 2rem 1.2rem;
     background: rgba(255,255,255,0.7);
     margin-top: 1.5rem;
     margin-bottom: 2rem;
     transition: box-shadow 0.2s;
-    max-width: 700px;
+    max-width: 80vw;
     margin-left: auto;
     margin-right: auto;
 }
@@ -30,6 +32,8 @@
     border: 1.5px solid #e0c887;
     background: #fffbe9;
     transition: box-shadow 0.2s;
+    min-width: 390px;
+    min-height: 450px;
 }
 
 .text-center h6, .text-center h2 {
@@ -76,10 +80,10 @@ label.control-label, .form-check-label {
     position: static;
     top: unset;
     z-index: 10;
-    max-width: none;
-    margin: 0;
+    max-width: 80vw;
+    margin: 0 auto;
     padding: 0;
-    width: 100vw;
+    width: 100%;
 }
 
 .app-title {
@@ -112,13 +116,10 @@ label.control-label, .form-check-label {
     transition: box-shadow 0.2s;
 }
 
-@media (max-width: 768px) {
-    .preview-header {
-        padding: 0;
-        max-width: none;
-    }
-    #canvas-wrapper {
-        padding: 1rem 0.5rem;
+@media (max-width: 600px) {
+    .preview-header, #canvas-wrapper {
         max-width: 98vw;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
     }
 }

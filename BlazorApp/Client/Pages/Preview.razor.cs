@@ -18,7 +18,7 @@ public partial class Preview : ComponentBase
     private double canvasHeight => PreviewState.CanvasHeight;
 
     private double previewWidth => canvasWidth * 2;
-    private double previewHeight => canvasHeight * 1.3;
+    private double previewHeight => canvasHeight * 1.5;
 
     private double ScaleX => previewWidth / canvasWidth;
     private double ScaleY => previewHeight / canvasHeight;
