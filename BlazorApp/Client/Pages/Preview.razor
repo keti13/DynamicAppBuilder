@@ -3,13 +3,21 @@
 @using BlazorApp.Shared
 
 <div id="mainDiv" class="d-flex flex-column align-items-center" style="min-height: 100vh; background-color: #e0c887;">
-    <div class="text-center mb-1">
-        <h6 class="fw-bold mb-1">Preview Mode (@CanvasState.SelectedView view)</h6>
-    </div>
-    <div id="canvas-wrapper" class="flex-grow-1 w-100 d-flex justify-content-center align-items-start overflow-auto">
+    <!-- Header Bar -->
+    <nav class="preview-header d-flex align-items-center justify-content-between w-100 px-4 py-2 mb-3">
+        <div class="d-flex align-items-center gap-2">
+            <span class="fw-bold app-title">Dynamic Application</span>
+        </div>
+        <span class="preview-mode-desc text-muted" style="font-size: 1rem;">Preview Mode (@CanvasState.SelectedView view)</span>
+    </nav>
+
+    <div id="canvas-wrapper"
+         class="w-100 d-flex justify-content-center align-items-start device-frame"
+         style="max-width: 100vw; overflow-x: auto; overflow-y: auto;">
+
         <div id="canvas-inner"
              class="position-relative rounded border bg-white shadow"
-             style="width: @(previewWidth)px; height: @(previewHeight)px">
+             style="width:@(previewWidth)px; min-width:@(previewWidth)px; height:@(previewHeight)px; min-height:@(previewHeight)px;">
               
                 @foreach (var control in CanvasState.Controls)
                 {
