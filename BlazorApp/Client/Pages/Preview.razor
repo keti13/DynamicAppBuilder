@@ -17,38 +17,33 @@
         <div id="canvas-inner"
              class="position-relative rounded border bg-white shadow"
              style="width:@(previewWidth)px; min-width:@(previewWidth)px; height:@(previewHeight)px; min-height:@(previewHeight)px;">
-              
-                @foreach (var control in CanvasState.Controls)
+            @if (CanvasState.SelectedView == "Mobile")
+            {
+                foreach (var control in CanvasState.Controls)
                 {
-                <div class="position-absolute" style="
-                     left:@(control.X * ScaleX)px;
-                     top:@(control.Y * ScaleY)px;
-                     min-width: @(150 * ScaleX)px;">
-                        <div class="mb-2">
-                            @switch (control.Type)
-                            {
+                    <div class="mobile-control-wrapper mb-3 mt-3">
+                        @switch (control.Type)
+                        {
                             case "TextInput":
-                                <div class="mb-3">
+                                <div>
                                     <label class="control-label">@control.Label</label>
-                                    <input class="form-control" type="text"
+                                    <input class="form-control mobile-full" type="text"
                                            placeholder="@control.Placeholder"
                                            value="@control.DefaultValue" />
                                 </div>
                                 break;
-
                             case "NumberInput":
-                                <div class="mb-3">
+                                <div>
                                     <label class="control-label">@control.Label</label>
-                                    <input class="form-control" type="number"
+                                    <input class="form-control mobile-full" type="number"
                                            placeholder="@control.Placeholder"
                                            value="@control.DefaultValue" />
                                 </div>
                                 break;
-
                             case "Dropdown":
-                                <div class="mb-3">
+                                <div>
                                     <label class="control-label">@control.Label</label>
-                                    <select class="form-select">
+                                    <select class="form-select mobile-full">
                                         <option disabled selected>@control.Placeholder</option>
                                         @foreach (var option in control.Options.Where(o => !string.IsNullOrWhiteSpace(o)))
                                         {
@@ -57,10 +52,9 @@
                                     </select>
                                 </div>
                                 break;
-
                             case "Checkbox":
-                                <div class="form-check mb-3">
-                                    <input class="form-check-input" type="checkbox"
+                                <div class="form-check">
+                                    <input class="form-check-input mobile-full" type="checkbox"
                                            checked="@("true".Equals(control.DefaultValue, StringComparison.OrdinalIgnoreCase))"
                                            id="chk_@control.Id" />
                                     <label class="form-check-label ms-1" for="chk_@control.Id">
@@ -68,26 +62,89 @@
                                     </label>
                                 </div>
                                 break;
-
                             case "DatetimePicker":
-                                <div class="mb-3">
+                                <div>
                                     <label class="control-label">@control.Label</label>
-                                    <input class="form-control" type="datetime-local"
+                                    <input class="form-control mobile-full" type="datetime-local"
                                            value="@control.DefaultValue" />
                                 </div>
                                 break;
-
                             case "Button":
-                                <button class="btn btn-primary" style="min-width: 300px;">
+                                <button class="btn btn-primary mobile-full">
                                     @(!string.IsNullOrWhiteSpace(control.DefaultValue) ? control.DefaultValue : control.Label)
                                 </button>
                                 break;
-
+                        }
+                    </div>
+                }
+            }
+            else
+            {
+                foreach (var control in CanvasState.Controls)
+                {
+                    <div class="position-absolute" style="
+                         left:@(control.X * ScaleX)px;
+                         top:@(control.Y * ScaleY)px;
+                         min-width: @(150 * ScaleX)px;">
+                        <div class="mb-2">
+                            @switch (control.Type)
+                            {
+                                case "TextInput":
+                                    <div class="mb-3">
+                                        <label class="control-label">@control.Label</label>
+                                        <input class="form-control" type="text"
+                                               placeholder="@control.Placeholder"
+                                               value="@control.DefaultValue" />
+                                    </div>
+                                    break;
+                                case "NumberInput":
+                                    <div class="mb-3">
+                                        <label class="control-label">@control.Label</label>
+                                        <input class="form-control" type="number"
+                                               placeholder="@control.Placeholder"
+                                               value="@control.DefaultValue" />
+                                    </div>
+                                    break;
+                                case "Dropdown":
+                                    <div class="mb-3">
+                                        <label class="control-label">@control.Label</label>
+                                        <select class="form-select">
+                                            <option disabled selected>@control.Placeholder</option>
+                                            @foreach (var option in control.Options.Where(o => !string.IsNullOrWhiteSpace(o)))
+                                            {
+                                                <option>@option</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    break;
+                                case "Checkbox":
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="checkbox"
+                                               checked="@("true".Equals(control.DefaultValue, StringComparison.OrdinalIgnoreCase))"
+                                               id="chk_@control.Id" />
+                                        <label class="form-check-label ms-1" for="chk_@control.Id">
+                                            @control.Label
+                                        </label>
+                                    </div>
+                                    break;
+                                case "DatetimePicker":
+                                    <div class="mb-3">
+                                        <label class="control-label">@control.Label</label>
+                                        <input class="form-control" type="datetime-local"
+                                               value="@control.DefaultValue" />
+                                    </div>
+                                    break;
+                                case "Button":
+                                    <button class="btn btn-primary" style="min-width: 300px;">
+                                        @(!string.IsNullOrWhiteSpace(control.DefaultValue) ? control.DefaultValue : control.Label)
+                                    </button>
+                                    break;
                             }
                         </div>
                     </div>
                 }
-            </div>
+            }
+        </div>
     </div>
 </div>
 
