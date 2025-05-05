@@ -1,153 +1,74 @@
 ﻿body, #mainDiv {
     background: linear-gradient(135deg, #f8fafc 0%, #f1e7c6 100%);
+    margin: 0;
+    padding: 2rem 1rem;
     min-height: 100vh;
-    margin: 0;
-    padding: 0;
-}
-
-#mainDiv {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 0;
-    margin: 0;
-}
-
-#canvas-wrapper {
-    box-shadow: 0 0 0 1.5px #e0c887, 0 8px 32px rgba(0,0,0,0.10);
-    border-radius: 1.5rem;
-    background: rgba(255,255,255,0.7);
-    margin-top: 1.5rem;
-    margin-bottom: 2rem;
-    transition: box-shadow 0.2s;
-    max-width: 80vw;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#canvas-inner {
-    border-radius: 1rem;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
-    border: 1.5px solid #e0c887;
-    background: #fffbe9;
-    transition: box-shadow 0.2s;
-    min-width: 390px;
-    min-height: 450px;
-}
-
-.text-center h6, .text-center h2 {
-    color: #7c5c1d;
-    letter-spacing: 0.5px;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-}
-
-label.control-label, .form-check-label {
-    color: #7c5c1d;
-    font-weight: 600;
-    font-size: 1rem;
-}
-
-.form-control, .form-select {
-    border-radius: 0.5rem;
-    border: 1.5px solid #e0c887;
-    background: #fff;
-    font-size: 1.05rem;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
-}
-
-.btn-primary {
-    background: linear-gradient(90deg, #e0c887 0%, #bfa76a 100%);
-    border: none;
-    color: #473a1a;
-    font-weight: 700;
-    border-radius: 0.5rem;
-    box-shadow: 0 2px 8px rgba(224,200,135,0.10);
-    transition: background 0.2s, color 0.2s;
-}
-
-.btn-primary:hover, .btn-primary:focus {
-    background: linear-gradient(90deg, #bfa76a 0%, #e0c887 100%);
-    color: #2d230c;
 }
 
 .preview-header {
-    background: rgba(255,255,255,0.95);
-    border-bottom: 1.5px solid #e0c887;
-    box-shadow: 0 2px 8px rgba(224,200,135,0.07);
-    border-radius: 0 0 1.2rem 1.2rem;
-    position: static;
-    top: unset;
-    z-index: 10;
-    max-width: 80vw;
-    margin: 0 auto;
-    padding: 0;
-    width: 100%;
-}
-
-.app-title {
-    font-size: 1.35rem;
-    color: #7c5c1d;
-    letter-spacing: 0.5px;
-    font-weight: 700;
-}
-
-.btn-outline-primary {
-    border: 1.5px solid #e0c887;
-    color: #7c5c1d;
-    background: #fffbe9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 1rem;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
     font-weight: 600;
-    border-radius: 0.5rem;
-    transition: background 0.2s, color 0.2s;
-}
-.btn-outline-primary:hover, .btn-outline-primary:focus {
-    background: #e0c887;
-    color: #473a1a;
 }
 
-.device-frame {
-    box-shadow: 0 0 0 8px #e0c887, 0 8px 32px rgba(0,0,0,0.10);
-    border-radius: 1.5rem;
-    padding: 2.5rem 2rem;
-    background: rgba(255,255,255,0.7);
-    margin-top: 1.5rem;
-    margin-bottom: 2rem;
-    transition: box-shadow 0.2s;
-}
-
-@media (max-width: 600px) {
-    .preview-header, #canvas-wrapper {
-        max-width: 98vw;
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
+    .preview-header.desktop {
+        width: 100%;
+        max-width: 1100px;
     }
+
+    .preview-header.mobile {
+        max-width: 420px;
+        width: 100%;
+    }
+
+
+.canvas-inner {
+    border-radius: 1rem;
+    background: #fffbe9;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    border: 1.5px solid #e0c887;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+    .canvas-inner.desktop {
+        width: 100%;
+        max-width: 1100px;
+        height: auto;
+        min-height: 600px;
+    }
+
+    .canvas-inner.mobile {
+        width: 100%;
+        max-width: 420px;
+    }
+
+.preview-scroll-wrapper {
+    width: 100%;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 2rem;
+    box-sizing: border-box;
 }
 
 .mobile-control-wrapper {
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: stretch;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-bottom: 1rem;
 }
 
 .mobile-full {
-    width: 98% !important;
-    min-width: 0 !important;
-    max-width: 98% !important;
-    box-sizing: border-box;
+    width: 100%;
 }
 
-#canvas-inner.mobile {
-    max-width: 420px;
-    margin: 0 auto;
-    padding: 1.2rem 0.5rem;
-    background: #fffbe9;
-    border-radius: 1rem;
-    min-width: 0;
-    min-height: 0;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
-    border: 1.5px solid #e0c887;
-}
+

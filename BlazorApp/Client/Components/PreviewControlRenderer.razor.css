@@ -1,0 +1,42 @@
+﻿label.control-label, .form-check-label {
+    color: #7c5c1d;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.control-item {
+    cursor: grab;
+    position: absolute;
+    min-width: 150px;
+    padding: 0;
+    display: block;
+    background: none;
+}
+
+    .control-item .form-control,
+    .btn {
+        min-width: 180px;
+        max-width: 100%;
+    }
+
+.form-control, .form-select {
+    border-radius: 0.5rem;
+    border: 1.5px solid #e0c887;
+    background: #fff;
+    font-size: 1.05rem;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, #e0c887 0%, #bfa76a 100%);
+    border: none;
+    color: #473a1a;
+    font-weight: 700;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1.2rem;
+}
+
+    .btn-primary:hover {
+        background: linear-gradient(90deg, #bfa76a 0%, #e0c887 100%);
+        color: #2d230c;
+    }

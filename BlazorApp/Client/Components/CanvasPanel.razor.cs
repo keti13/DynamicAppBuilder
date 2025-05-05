@@ -27,7 +27,7 @@ namespace BlazorApp.Client.Components
                 _dotNetRef = DotNetObjectReference.Create(this);
                 await JS.InvokeVoidAsync("setupComponentDragToCanvas", _dotNetRef);
                 await JS.InvokeVoidAsync("enableDrag", ".draggable");
-                await JS.InvokeVoidAsync("registerBlazorCanvasRef", _dotNetRef); // NEW
+                await JS.InvokeVoidAsync("registerBlazorCanvasRef", _dotNetRef);
             }
         }
 

@@ -1,26 +1,32 @@
 ﻿#mainDiv {
-    min-height: 100vh;
-    max-height: 100dvh; /* ⬅️ Optional, for extra safety */
-    overflow-y: auto; /* ✅ Scroll when content overflows */
     display: flex;
     justify-content: center;
-    align-items: start;
-    background-color: #e3f2fd;
+    align-items: flex-start;
     padding: 2rem;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    overflow-y: auto;
+}
+.canvas-mobile-panel .flex-grow-1 {
+    min-height: 400px;
 }
 
-
-/* Make subdiv exactly 90vh tall */
-#subdiv {
-    height: 100vh;
+#subDiv {
+    width: 100%;
+    max-width: min(1200px, 100vw - 2rem);
+    max-height: 1100px;
+    overflow-y: auto;
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* 🔥 prevents children from exceeding this height */
 }
 
 
 .small-radio {
-    transform: scale(0.85); /* Shrinks radio button */
+    transform: scale(0.85);
     margin-top: 2px;
 }
 
@@ -34,7 +40,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent dark background */
+    background-color: rgba(0, 0, 0, 0.5); 
     z-index: 9999;
 }
 
@@ -113,7 +119,7 @@ thead th {
         padding-top: 1rem;
     }
 
-    #subdiv {
+    #subDiv {
         height: auto !important;
         max-height: none !important;
         overflow-y: auto !important;
@@ -121,7 +127,7 @@ thead th {
     }
 
     .canvas-mobile-panel {
-        min-height: 60vh; /* ⬆️ Increase canvas height */
+        min-height: 60vh; 
         flex-grow: 2;
     }
 
