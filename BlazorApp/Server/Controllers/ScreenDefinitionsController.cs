@@ -17,7 +17,6 @@ namespace BlazorApp.Server.Controllers
             _context = context;
         }
 
-        // POST: api/ScreenDefinitions/save
         [HttpPost("save")]
         public async Task<IActionResult> SaveScreen([FromBody] SaveRequest request)
         {

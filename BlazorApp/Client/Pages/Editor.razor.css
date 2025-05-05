@@ -111,8 +111,6 @@ thead th {
     z-index: 1;
 }
 
-
-/* On mobile: top-align the content to allow scrolling */
 @media (max-width: 767px) {
     #mainDiv {
         align-items: flex-start !important;

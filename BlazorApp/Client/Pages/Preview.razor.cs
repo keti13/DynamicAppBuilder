@@ -11,7 +11,6 @@ public partial class Preview : ComponentBase
     [Inject] private IJSRuntime JS { get; set; } = default!;
     [Inject] private CanvasPreviewState PreviewState { get; set; } = default!;
 
-
     private DotNetObjectReference<Preview>? dotNetRef { get; set; } = default!;
     private double canvasWidth => PreviewState.CanvasWidth;
     private double canvasHeight => PreviewState.CanvasHeight;

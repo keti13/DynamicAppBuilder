@@ -52,8 +52,6 @@
         cursor: grabbing;
     }
 
-
-
 .control-item {
     cursor: grab;
     position: absolute;
@@ -67,7 +65,6 @@
         min-width: 180px;
         max-width: 100%;
     }
-
 
     .control-item:active {
         cursor: grabbing;
@@ -88,13 +85,12 @@
         box-sizing: border-box;
     }
 
-    /* Apply visual consistency to all disabled/readonly form elements */
     .control-item input[readonly],
     .control-item select[disabled],
     .control-item button[disabled] {
-        background-color: #e9ecef !important; /* Bootstrap's disabled bg */
-        border-color: #ced4da !important; /* Consistent border */
-        color: #212529 !important; /* Standard text */
+        background-color: #e9ecef !important; 
+        border-color: #ced4da !important;
+        color: #212529 !important;
         opacity: 1 !important; 
     }
 

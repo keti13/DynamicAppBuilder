@@ -45,12 +45,12 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center; /* ✅ center child block */
+    align-items: center;
     margin-bottom: 1rem;
 }
 
     .mobile-control-wrapper > div {
-        width: 100%; /* ✅ force label + input container to stretch */
+        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;

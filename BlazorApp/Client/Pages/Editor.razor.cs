@@ -2,7 +2,6 @@
 using BlazorApp.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using System.Drawing;
 using System.Net.Http.Json;
 using System.Text.Json;
 
