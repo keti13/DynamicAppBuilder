@@ -8,7 +8,8 @@ namespace BlazorApp.Client.Components
     {
         [Inject] protected IJSRuntime JS { get; set; } = default!;
         [Parameter] public List<ControlType> CanvasControls { get; set; } = new List<ControlType>();
-        [Parameter]  public string ViewMode { get; set; } = "Desktop";
+        [Parameter] public string ViewMode { get; set; } = "Desktop";
+        [Parameter] public bool IsViewManuallySelected { get; set; } = false;
         [Parameter] public EventCallback<ControlType> OnSelectControl { get; set; }
         [Parameter] public ControlType? SelectedControl { get; set; }
         [Parameter] public List<ControlType> AvailableControls { get; set; } = new();

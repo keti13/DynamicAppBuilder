@@ -4,18 +4,7 @@
 @using BlazorApp.Client.Components
 
 <div id="mainDiv" class="d-flex flex-column align-items-center" style="min-height: 100vh; background-color: #e0c887;">
-    <nav class="preview-header"
-         style="width:@(previewWidth)px;">
-        <div class="d-flex align-items-center gap-2">
-            <span class="fw-bold app-title">Dynamic Application</span>
-        </div>
-        <span class="preview-mode-desc text-muted" style="font-size: 1rem;">
-            Preview Mode (@CanvasState.SelectedView view)
-        </span>
-    </nav>
     <div class="preview-scroll-wrapper">
-            
-
             <div id="canvas-inner"
                     class="preview-canvas position-relative rounded border bg-white shadow mb-5"
                     style="width:@(previewWidth)px; height:@(previewHeight)px;">

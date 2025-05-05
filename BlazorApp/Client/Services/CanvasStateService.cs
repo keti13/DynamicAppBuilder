@@ -6,5 +6,6 @@ namespace BlazorApp.Client.Services
     {
         public List<ControlType> Controls { get; set; } = new();
         public string SelectedView { get; set; } = "Desktop";
+        public bool IsViewManuallySelected { get; set; } = false;
     }
 }

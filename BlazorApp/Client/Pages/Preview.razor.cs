@@ -10,11 +10,9 @@ public partial class Preview : ComponentBase
     [Inject] private CanvasStateService CanvasState { get; set; } = default!;
     [Inject] private IJSRuntime JS { get; set; } = default!;
     [Inject] private CanvasPreviewState PreviewState { get; set; } = default!;
+
+
     private DotNetObjectReference<Preview>? dotNetRef { get; set; } = default!;
-
-    private List<ControlType> CanvasControls => CanvasState.Controls;
-    private string ViewMode => CanvasState.SelectedView;
-
     private double canvasWidth => PreviewState.CanvasWidth;
     private double canvasHeight => PreviewState.CanvasHeight;
 
@@ -23,8 +21,6 @@ public partial class Preview : ComponentBase
 
     private double ScaleX => previewWidth / canvasWidth;
     private double ScaleY => previewHeight / canvasHeight;
-
-    private string AspectRatio => $"{previewWidth} / {previewHeight}";
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -46,6 +42,9 @@ public partial class Preview : ComponentBase
 
     private void UpdateViewBasedOnWidth(int width)
     {
+        if (CanvasState.IsViewManuallySelected)
+            return;
+
         if (width < 768 && CanvasState.SelectedView != "Mobile")
         {
             CanvasState.SelectedView = "Mobile";

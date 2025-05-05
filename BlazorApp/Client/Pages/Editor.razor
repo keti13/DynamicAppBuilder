@@ -25,14 +25,14 @@
                     <!-- View Mode Selector -->
                     <div class="d-flex justify-content-center align-items-center gap-2 mb-1 text-muted" style="font-size: 0.75rem;">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input small-radio" type="radio" name="viewMode"
-                                @onchange="@(() => selectedView = "Desktop")"
-                                checked="@("Desktop" == selectedView)" />
+                            <input type="radio" name="viewMode"
+                            @onchange="@(() => SetView("Desktop"))"
+                                   checked="@("Desktop" == selectedView)" />
                             <label class="form-check-label">Desktop</label>
                         </div>
                         <div class="form-check form-check-inline ms-3">
-                            <input class="form-check-input small-radio" type="radio" name="viewMode"
-                                   @onchange="@(() => selectedView = "Mobile")"
+                            <input type="radio" name="viewMode"
+                            @onchange="@(() => SetView("Mobile"))"
                                    checked="@("Mobile" == selectedView)" />
                             <label class="form-check-label">Mobile</label>
                         </div>
@@ -49,7 +49,8 @@
                                      AvailableControls="@availableControls"
                                      SelectedControl="@selectedControl"
                                      OnSelectControl="@HandleControlSelected"
-                                     ViewMode="@selectedView" />
+                                     ViewMode="@selectedView" 
+                                     IsViewManuallySelected="@isViewManuallySelected"/>
 
 
                     </div>

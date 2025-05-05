@@ -27,6 +27,7 @@ namespace BlazorApp.Client.Pages
         };
 
         private string selectedView = "Desktop";
+        private bool isViewManuallySelected = false; 
         private bool CanSave => canvasControls.Any();
 
         protected List<ControlType> canvasControls = new();
@@ -40,6 +41,14 @@ namespace BlazorApp.Client.Pages
         private string? saveStatusClass;
         private bool isSaving = false;
         private bool isLoading = false;
+
+        private void SetView(string view)
+        {
+            selectedView = view;
+            CanvasState.SelectedView = view;
+            CanvasState.IsViewManuallySelected = true;
+            isViewManuallySelected = true;
+        }
 
         private async Task LoadScreen(int screenId)
         {
@@ -137,6 +146,7 @@ namespace BlazorApp.Client.Pages
             var size = await JS.InvokeAsync<BlazorApp.Shared.Size>("getElementSize", "canvas-dropzone");
             CanvasState.Controls = canvasControls;
             CanvasState.SelectedView = selectedView;
+            CanvasState.IsViewManuallySelected = isViewManuallySelected;
             PreviewState.CanvasWidth = size.width;
             PreviewState.CanvasHeight = size.height;
 
